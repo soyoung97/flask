@@ -26,15 +26,22 @@ def delete_event():
     printit("delete_event")
     if request.method == "POST":
         try:
+            print("1")
             data = getdata(request.data)
-            id = data["ID"]
-            query = ("DELETE FROM event WHERE ID == %d"%id)
+            ide = data["ID"]
+            print("id")
+            print(ide)
+            query = ("DELETE FROM event WHERE ID == %d"%ide)
+            print(query)
             with sql.connect("money.db") as con:
                 cur = con.cursor()
+                print("2")
                 cur.execute(query)
-                res = {"result : Success"}
+                print("3")
+                res = {"result" : "Success"}
         except:
             con.rollback()
+            print("4")
             res = {"result" : "Failure"}
             print("Error in delete event")
         finally:
@@ -265,7 +272,7 @@ def account():
     printit("find_account_info")
     if request.method == "POST":
         try:
-            data = getdata(data)
+            data = getdata(request.data)
             uid = data["unique_id"]
             query = ("SELECT account_info FROM user where unique_id == \"%s\""%(uid))
             with sql.connect("money.db")as con:
@@ -286,7 +293,7 @@ def debtor():
     if request.method == 'POST':
         res = []
         try:
-            data = getdata("request.data")
+            data = getdata(request.data)
             uid = data["unique_id"]
             query = ("SELECT * FROM event where debtor == \"%s\""%(uid))
             with sql.connect("money.db") as con:
