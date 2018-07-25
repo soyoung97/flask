@@ -6,7 +6,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug import secure_filename
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16* 1024 * 1024
-UPLOAD_FOLDER = '/home/soyoung/photos'
+UPLOAD_FOLDER = '/home/soyoung/static'
 ALLOWED_EXTENTIONS = set(['txt','pdf','png','jpg','jpeg','gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 

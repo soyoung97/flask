@@ -1,0 +1,22 @@
+{% block content %}
+
+<p> -----AND your converted output image...! --------- </p>
+
+<img src = {{ url_for('static', filename = imgpath ) }} alt = "Output Image" >
+
+<p> --------SATISFIED? :) ------------</p>
+
+<h1><a href = "http://52.231.153.77:8080/black_image">GO Upload another file</h1>
+
+<img src = {{ url_for( 'static', filename = 'gan.png' )}} alt = "description">
+
+<p> model1 trained by face </p>
+<img src = {{ url_for( 'static', filename = 'Result.png' )}} alt="Sample Image">
+
+<p> model2 trained by nature </p>
+<img src = {{ url_for( 'static', filename = 'model1.png' )}} alt="Sample Image">
+
+
+
+{% endblock  %}
+

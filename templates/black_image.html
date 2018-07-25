@@ -1,0 +1,22 @@
+<!doctype html>
+
+{% block header %}
+
+<title>Hi! this is SoYOUNG and SoungOn's server! </title>
+
+{% endblock %}
+
+
+
+<html>
+  <body>
+
+      <p> Simply upload the black/white image you want to convert into. </p>
+      <form action = "http://52.231.153.77:8080/black_image" method = "POST"
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form>
+   </body>
+</html>
+

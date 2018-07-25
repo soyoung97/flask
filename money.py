@@ -6,7 +6,7 @@ import ast
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug import secure_filename
 from pyfcm import FCMNotification
-
+import requests
 
 
 app = Flask(__name__)
@@ -98,6 +98,17 @@ def push():
                         message_body = {"name":name, "nickname":nickname, "info":info,"price":price, "date":date, "creditor_unique_id": unique_id}
             res =push_service.notify_single_device(registration_id= real, message_title = message_title, message_body = message_body)
             print("SENT -> %s"%res)
+
+
+
+     #       url =  "https://fcm.googleapis.com/fcm/send"
+     #       auth = ('Authorization: key = %s'%api)
+     #       headers = {auth, 'Content-Type: application/json',}
+     #       datareal = {"message":{ "notification":{"title":message_title, "body":message_body,},"token":real}}
+     #       datareal = str(datareal)
+     #       responce = requests.post(url, headers = headers, data = datareal)
+     #       print("OHMYGOD DID IT SUCCEED!>!>!>!!??!?!")
+     #       print(responce)
         except:
             con.rollback()
             print("error in push. TT")
@@ -198,7 +209,7 @@ def update_user():
     exists = False
     if request.method == 'POST':
         try:
-            data = request.data(data)
+            data = getdata(request.data)
             uid = data["unique_id"]
             name =  data["name"]
             nickname = data["nickname"]
@@ -210,7 +221,7 @@ def update_user():
                     cur.execute("UPDATE user SET name = %s,nickname = %s, account_info = %s WHERE unique_id is \"%s\""%("\""+name+"\"", "\""+nickname+"\"", "\""+account_info+"\"", uid ));
                 con.commit()
                 res = {"result": "Success"}
-                print ("Record successfully updated for name = %s", name)
+                print ("Record successfully updated for name = %s"%name)
         except:
             con.rollback()
             print("ERROR in update user operation")
@@ -229,7 +240,7 @@ def search_name():
             with sql.connect("money.db") as con:
                 cur = con.cursor()
                 ret=[]
-                mystr = ("SELECT * FROM user where name LIKE \'%%%s%%\'"%(name))
+                mystr = ("SELECT * FROM user where name or nickname LIKE \'%%%s%%\'"%(name))
                 res = cur.execute(mystr)
                 for row in res:
                     uid, name, nickname, account_info, token = row
